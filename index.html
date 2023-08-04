@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+
+  <style>
+    table, th, td {
+      background-color: #FFFFCC;
+      border: 1px solid black;
+      width: 600px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Kişiye Özel Tişört Sipariş Aracı</h1>
+  <hr/>
+  <span>Lütfen oluşturmak istediğiniz siparişe ilişkin aşağıdaki bilgileri doldurunuz;</span>
+  <h2>Kişisel Bilgileri</h2>
+  <form id="orderForm">
+    <label for="name">Adınız:</label>
+    <input type="text" name="name" id="name" required>
+    <br/>
+    <label for="lastname">Soyadınız:</label>
+    <input type="text" name="lastname" id="lastname" required>
+    <br>
+    <label for="bdate">Doğum Tarihiniz:</label>
+    <input type="date" name="bdate" id="bdate" required>
+    <br/>
+    <label for="email">Mail Adresiniz:</label>
+    <input type="email" name="email" id="email" required>
+    <br/>
+    <label for="phonenumber">Telefon:</label>
+    <input type="tel" name="phonenumber" id="phonenumber" pattern="[0-9]{3}-[0-9]{2}-[0-9]{3}" required>
+    <br/>
+    <hr/>
+    <h2>Sipariş Bilgileri</h2>
+    <label for="shirtColor">Tişört Rengi:</label>
+    <input type="color" name="shirtColor" id="shirtColor" required>
+    <br/>
+    <label for="textColor">Yazı Rengi:</label>
+    <input type="color" name="textColor" id="textColor" required>
+    <br/>
+    <label for="shirtText">Tişört üzerinde yazacak yazıyı girin:</label>
+    <input type="text" name="shirtText" id="shirtText" required>
+    <br/>
+    <label for="name">Tişört Adeti:</label>
+    <input type="number" name="shirtNumber" id="shirtNumber" required>
+    <br/>
+    <label for="sizeInput">Beden Seçiniz:</label>
+    <input type="range" id="sizeInput" name="size" min="1" max="6" step="1" value="3">
+    <br>
+    <input type="button" id="selectButton" value="Seç">
+    <span id="selectedSize">M</span>
+    </p>
+    <h2>Teslimat Bilgileri</h2>
+    <label for="address">Adres:</label>
+    <input type="address" name="address" id="address" required>
+    <br>
+    <label for="deliveryDate">Teslimat tarihi için bir aralık seçiniz:</label>
+    <input type="date" name="deliveryDate" id="deliveryDate" required>
+    <hr/>
+    <h2>Ödeme Bilgileri</h2>
+    <label for="nameLastname">Ad Soyad:</label>
+    <input type="text" name="nameLastname" id="nameLastname" required>
+    <br>
+    <label for="cardNumber">Kart Numarası:</label>
+    <input type="number" name="cardNumber" id="cardNumber" required>
+    <br>
+    <label for="lastDate">Son Kullanma Tarihi:</label>
+    <input type="date" name="lastDate" id="lastDate" pattern="\d{2}/\d{2}/" required>
+    <br>
+    <label for="cvv">CVV:</label>
+    <input type="number" name="cvv" id="cvv" required>
+    <br>
+    <br>
+    <input type="button" value="Onayla" id="confirmButton">
+  </form>
+
+  <table id="orderTable">
+    <tr>
+      <th align="center" colspan="3">SİPARİŞ ONAY</th>
+    </tr>
+    <tr>
+      <th rowspan="5">Kişisel Bilgiler</th>
+      <td>Ad :</td>
+      <td id="tdName"></td>
+    </tr>
+    <tr>
+      <td>Soyad:</td>
+      <td id="tdLastname"></td>
+    </tr>
+    <tr>
+      <td>Doğum Tarihi:</td>
+      <td id="tdBdate"></td>
+    </tr>
+    <tr>
+      <td>Mail Adresi:</td>
+      <td id="tdEmail"></td>
+    </tr>
+    <tr>
+      <td>Telefon:</td>
+      <td id="tdPhonenumber"></td>
+    </tr>
+    
+    <tr>
+      <th rowspan="5">Sipariş Bilgileri</th>
+      <td>Tişört Rengi :</td>
+      <td id="tdShirtColor"></td>
+    </tr>
+    <tr>
+      <td>Yazı Rengi:</td>
+      <td id="tdTextColor"></td>
+    </tr>
+    <tr>
+      <td>Yazı:</td>
+      <td id="tdShirtText"></td>
+    </tr>
+    <tr>
+      <td>Tişört Adeti:</td>
+      <td id="tdShirtNumber"></td>
+    </tr>
+    <tr>
+      <td>Tişört Bedeni:</td>
+      <td id="tdSize"></td>
+    </tr>
+    <tr>
+      <th rowspan="2">Teslimat Bilgileri</th>
+      <td>Adres :</td>
+      <td id="tdAddress"></td>
+    </tr>
+    <tr>
+      <td>Teslim Tarihi:</td>
+      <td id="tdDeliveryDate"></td>
+    </tr>
+    <th rowspan="4">Ödeme Bilgileri </th>
+    <td>Ad Soyad :</td>
+    <td id="tdNameLastname"></td>
+    <tr>
+      <td>Kart Numarası:</td>
+      <td id="tdCardNumber"></td>
+    </tr>
+    <tr>
+      <td>Son Kullanma Tarihi:</td>
+      <td id="tdLastDate"></td>
+    </tr>
+    <tr>
+      <td>CVV:</td>
+      <td id="tdCvv"></td>
+    </tr>
+    
+  </table>
+
+  <script>
+    const sizeInput = document.getElementById('sizeInput');
+    const selectedSizeSpan = document.getElementById('selectedSize');
+    const selectButton = document.getElementById('selectButton');
+
+    
+    const sizeLabels = ['XS', 'S', 'M', 'L', 'XL', 'XXL'];
+
+    
+    sizeInput.addEventListener('input', () => {
+      const index = parseInt(sizeInput.value) - 1;
+      selectedSizeSpan.textContent = sizeLabels[index];
+    });
+
+    
+    selectButton.addEventListener('click', () => {
+      const index = parseInt(sizeInput.value) - 1;
+      alert('Selected size: ' + sizeLabels[index]);
+    });
+
+    document.getElementById('confirmButton').addEventListener('click', function () {
+      // Kişisel Bilgiler
+      document.getElementById('tdName').textContent = document.getElementById('name').value;
+      document.getElementById('tdLastname').textContent = document.getElementById('lastname').value;
+      document.getElementById('tdBdate').textContent = document.getElementById('bdate').value;
+      document.getElementById('tdEmail').textContent = document.getElementById('email').value;
+      document.getElementById('tdPhonenumber').textContent = document.getElementById('phonenumber').value;
+
+      // Sipariş Bilgileri
+      document.getElementById('tdShirtColor').textContent = document.getElementById('shirtColor').value;
+      document.getElementById('tdTextColor').textContent = document.getElementById('textColor').value;
+      document.getElementById('tdShirtText').textContent = document.getElementById('shirtText').value;
+      document.getElementById('tdShirtNumber').textContent = document.getElementById('shirtNumber').value;
+      document.getElementById('tdSize').textContent = document.getElementById('selectedSize').textContent;
+
+      // Teslimat Bilgileri
+      document.getElementById('tdAddress').textContent = document.getElementById('address').value;
+      document.getElementById('tdDeliveryDate').textContent = document.getElementById('deliveryDate').value;
+
+      // Ödeme Bilgileri
+      document.getElementById('tdNameLastname').textContent = document.getElementById('nameLastname').value;
+      document.getElementById('tdCardNumber').textContent = document.getElementById('cardNumber').value;
+      document.getElementById('tdLastDate').textContent = document.getElementById('lastDate').value;
+      document.getElementById('tdCvv').textContent = document.getElementById('cvv').value;
+    });
+  </script>
+
+<input type="button" value="Tamamla">
+</body>
+</html>
